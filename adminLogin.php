@@ -4,7 +4,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>INTI Student Login</title>
+    <title>INTI Administrator Login</title>
     <link rel="stylesheet" href="loginstudent.css">
 
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
@@ -28,19 +28,16 @@
                 
     </div>
 
-<form class="box" action="studentCheck.php" method="POST"> 
+<form class="box" action="adminLoginCheck.php" method="POST"> 
 
-<h1>STUDENT LOGIN</h1>
+<h1>ADMIN LOGIN</h1>
 
 <input type="text" name="uname" placeholder="Enter Username" id="uname">
-<input type="password" name="userpass" placeholder="Enter Password" id="userpass">
+<input type="password" name="pass" placeholder="Enter Password" id="pass">
 <input type="submit" name="submit" value="Login">
- <div class="register_link">
-    Not a Student yet? <a href="studentRegister.php">Register</a><br>
-    <br>
-    
-    <a href="adminLogin.php">Sign in As ADMIN</a> 
-</div>
+
+<a href="loginstudent.php" style="color: turquoise;">Sign in As Student</a>
+ 
 </form>
 </div>
 
