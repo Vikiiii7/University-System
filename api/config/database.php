@@ -1,7 +1,7 @@
 <?php
 class Database{
  
-    // specify your own database credentials
+    //  database credentials
     private $host = "localhost";
     private $db_name = "inti_studentweb";
     private $username = "root";

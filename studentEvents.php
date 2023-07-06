@@ -11,7 +11,6 @@
     include 'db_studentUsers.php';
     session_start();
 
-
 ?>
   <style type="text/css">
 
@@ -338,7 +337,7 @@ body {
               while($row = mysqli_fetch_assoc($result)){
 ?>
     
-              <a href=" ">
+              <a href="">
                 <img src= '<?php echo $row["filepath"]; ?>' data-alt= '<?php echo $row["description"]; ?>' data-id='<?=$row["id"]; ?>' data-title='<?php echo $row["title"]; ?>' width="300" height="200">
                 <span><?php echo $row['title']; ?></span>
               </a>
@@ -361,8 +360,11 @@ body {
 
 
 <script>
+
+
 // Container we'll use to output the image
 let image_popup = document.querySelector('.image-popup');
+
 // Iterate the images and apply the onclick event to each individual image
 document.querySelectorAll('.images a').forEach(img_link => {
   img_link.onclick = e => {
@@ -372,48 +374,84 @@ document.querySelectorAll('.images a').forEach(img_link => {
     img.onload = () => {
       // Create the pop out image
       image_popup.innerHTML = `
-        <div class="con" style="overflow-y:scroll";>
+        <div class="con" style="overflow-y:scroll;">
           <h3>${img_meta.dataset.title}</h3>
           </br>
-
-          <h3 style="width: 950px; line-height: 1.9";>${img_meta.dataset.alt}</h3>
-          
+          <h3 style="width: 950px; line-height: 1.9;">${img_meta.dataset.alt}</h3>
           <center>
-          <img src="${img.src}" width="650px" height="auto" style="margin-top: 50px";>
+            <img src="${img.src}" width="650px" height="auto" style="margin-top: 50px;">
           </center>
-           <div>
-    <button class="participate-btn">Participate</button>
-    <button class="remove-participation-btn">Remove Participation</button>
-  </div>
-
+          <br>
+          <div>
+            <button class="participate-btn" data-event-id="${img_meta.dataset.id}">Click to Participate / Remove Participation</button>
+            
+          </div>
         </div>
       `;
       image_popup.style.display = 'flex';
+
+      // Attach event listeners to the participate buttons
+      attachParticipateButtonListeners();
     };
     img.src = img_meta.src;
   };
 });
+
 // Hide the image popup container, but only if the user clicks outside the image
 image_popup.onclick = e => {
   if (e.target.className == 'image-popup') {
-    image_popup.style.display = "none";
+    image_popup.style.display = 'none';
   }
 };
 
+// Attach event listeners to the participate buttons
+function attachParticipateButtonListeners() {
+  const participateButtons = document.querySelectorAll('.participate-btn');
+  participateButtons.forEach(button => {
+    button.addEventListener('click', handleParticipateButtonClick);
+  });
+}
 
-// Participate button event listener
-image_popup.querySelector('.participate-btn').addEventListener('click', function() {
-  // Perform the necessary logic to participate in the event
-  // ...
-});
+// Handle participate button click event
+function handleParticipateButtonClick(e) {
+  e.preventDefault();
+  const eventID = e.target.getAttribute('data-event-id');
 
-// Remove participation button event listener
-image_popup.querySelector('.remove-participation-btn').addEventListener('click', function() {
-  // Perform the necessary logic to remove participation from the event
-  // ...
-});
+  // Send AJAX request to the server
+  $.ajax({
+    url: 'update_participation.php',
+    method: 'POST',
+    data: {
+      participate: true,
+      event_id: eventID
+    },
+    dataType: 'json',
+    success: function(response) {
+      // Handle the server's response
+      if (response.status === 'success') {
+        // Update the UI or show a success message
+        alert(response.message);
+        // Reload the page or update the UI dynamically
+        location.reload();
+      } else {
+        // Show an error message
+        alert(response.message);
+      }
+    },
+    error: function() {
+      // Show an error message
+      alert('An error occurred. Please try again.');
+    }
+  });
+}
+
+// Attach initial event listeners
+attachParticipateButtonListeners();
+
+
 
 </script>
+
 
 
 
@@ -426,10 +464,6 @@ image_popup.querySelector('.remove-participation-btn').addEventListener('click',
     });
   </script>
   
-
-  
-
-
 
 </body>
 

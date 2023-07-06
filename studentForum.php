@@ -287,7 +287,9 @@ background: linear-gradient(180deg, rgba(128,230,235,1) 22%, rgba(254,90,251,1) 
               <li>Email : <?php echo $row['email']."</br>";?></li>
                 
               <li>Discussion : <?php echo $row['dissc']."</br>";?></li>
-               
+
+          
+
                
 </div>
 </ul><?php $num++;

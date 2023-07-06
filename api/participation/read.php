@@ -7,7 +7,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/events.php';
+include_once '../objects/participation.php';
  
 // instantiate database and product object
 $database = new Database();
@@ -40,11 +40,9 @@ if($num>0){
  
         $forum_item=array(
             "id" => $id,
-            "title" => $title,
-            "description" => $description,
-            "uploaded_date" => $uploaded_date,
-            "filepath" => $filepath,
-            
+            "uname" => $uname,
+            "event_id" => $event_id,
+                    
         );
  
         array_push($forum_arr["records"], $forum_item);
@@ -65,7 +63,7 @@ else{
  
     // tell the user no product found
     echo json_encode(
-        array("message" => "No Events found.")
+        array("message" => "No Participants found.")
     );
 } 
 
